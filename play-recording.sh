@@ -9,12 +9,12 @@ function cleanup {
     child_pid=$1
     working_dir=$2
     if [ "$child_pid" -ne "0" ]; then
-        kill $child_pid
+        kill $child_pid > /dev/null 2> /dev/null
     fi
 
     rm -rf $working_dir
     
-    kill 0
+    kill 0 > /dev/null 2> /dev/null
 }
 
 function fatal {
@@ -52,6 +52,7 @@ function main {
     play -q $AUDIO_FILENAME &
     child_pid=$!
 
+    `which sleep` .7
     asciinema play $CAST_FILENAME
 
 }
