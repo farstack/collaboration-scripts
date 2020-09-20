@@ -22,7 +22,7 @@ source ~/.bashrc
 This script is similar to sharing your screen on a video call, but it shares just your terminal. It's all text based so it's good for low bandwidth settings. When you start the session your get a URL, useranme, and password that can be sent to person you want to share your terminal with. 
 
 *Warning anyone with the URL and password will have control of your terminal*
-![share termina](assets/share-terminal.png)
+![share termina](/assets/share-terminal.png)
 
 When you're done sharing just type `exit`.
 
