@@ -60,7 +60,7 @@ function main {
     child_pid=$!
 
     debug starting asciicema
-    asciinema rec $cast_file
+    asciinema rec -q $cast_file
 
 }
 
