@@ -10,6 +10,8 @@ function cleanup {
     working_dir=$2
     output_file=`realpath $3`
     if [ "$child_pid" -ne "0" ]; then
+        # give it one second to finish recording
+        env sleep 2.5
         kill $child_pid
     fi
 

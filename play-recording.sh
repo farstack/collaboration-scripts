@@ -7,13 +7,10 @@ AUDIO_FILENAME="audio.ogg"
 #cleanup $child_pid $temp_dir $output_file
 function cleanup {
     child_pid=$1
-    working_dir=$2
     if [ "$child_pid" -ne "0" ]; then
         kill $child_pid > /dev/null 2> /dev/null
     fi
 
-    rm -rf $working_dir
-    
     kill 0 > /dev/null 2> /dev/null
 }
 
@@ -37,23 +34,21 @@ function main {
     if [ -z "$recording_file" ]; then
         fatal please provide the recording file
     fi
-    working_dir=`mktemp -d`
     recording_path=`realpath $recording_file`
     
     function call_cleanup {
-        cleanup $child_pid $working_dir
+        cleanup $child_pid 
     }
     trap "exit" INT TERM ERR
     trap "call_cleanup;" EXIT
 
-    cd $working_dir
-    tar xzf $recording_path
-
-    play -q $AUDIO_FILENAME &
+     	
+    # Start audio playback
+    tar -xOzf $recording_path $AUDIO_FILENAME | play -q - &
     child_pid=$!
 
-    `which sleep` .7
-    asciinema play $CAST_FILENAME
+    # start asciinema playback
+    tar -xOzf $recording_path $CAST_FILENAME | asciinema play -
 
 }
 
