@@ -49,3 +49,7 @@ Plays the output from `./record-terminal.sh`
 ```
 play-recording output.rec
 ```
+
+# rdrop, rpickup, and rlist
+These three are just simple wrappers around rsync. They are intended for pushing and pull from a single rsync server
+
