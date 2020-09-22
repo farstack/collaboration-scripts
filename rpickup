@@ -2,4 +2,4 @@
 
 filename="$1"
 
-rsync -r --progress --partial --inplace rsync://$RSYNC_USER@$RSYNC_URL/$filename .
+rsync -r --progress --partial --inplace "rsync://$RSYNC_USER@$RSYNC_URL/$filename" .
