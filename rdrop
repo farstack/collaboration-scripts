@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+file_path=`realpath $1`
+
+rsync -r --progress --partial --inplace "$file_path" rsync://$RSYNC_USER@$RSYNC_URL

@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+
+
+rsync -l rsync://$RSYNC_USER@$RSYNC_URL/"$1"

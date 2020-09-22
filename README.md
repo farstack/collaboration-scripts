@@ -11,10 +11,18 @@ snap install --classic asciinema
 sudo apt install alsa-utils
 sudo apt install vorbis-tools
 sudo apt install sox
+```
 
-# not a dependency, but you'll need to add ~/go/bin to your PATH
-echo -e '\nexport PATH=$PATH:$HOME/go/bin' >> ~/.bashrc
-source ~/.bashrc
+## Setting up your bashrc
+Add these lines to your .bashrc file. Replace `$HOME/projects` with the location of where you saved this repo. 
+```
+export PATH=$PATH:$HOME/go/bin 
+export PATH=$PATH:$HOME/projects/collaboration-scripts
+
+export RSYNC_URL="<server-ip>:<server-port>/<module>"
+export RSYNC_USER="<username"
+export RSYNC_PASSWORD="<password>"
+
 ```
 
 # Running the scripts
