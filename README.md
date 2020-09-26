@@ -53,3 +53,8 @@ play-recording output.rec
 # rdrop, rpickup, and rlist
 These three are just simple wrappers around rsync. They are intended for pushing and pull from a single rsync server
 
+
+
+# Running on mac
+most of these dependencies should be avaible on mac through homebrew. But the scripts do not yet work. Some addtional dependencies if running on mac:
+* brew install coreutils
