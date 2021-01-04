@@ -1,0 +1,62 @@
+#!/usr/bin/sh
+
+architecture=`dpkg --print-architecture`
+
+
+get_data(){
+    snap_name=$1
+
+    curl -s -H 'Snap-Device-Series: 16' -H 'User-Agent: something' \
+        "https://api.snapcraft.io/v2/snaps/info/$1?architecture=$architecture"
+}
+
+get_channel(){
+    snap_channel="$1"
+    if [ -z "$snap_channel" ]; then
+        snap_channel="stable"
+    fi
+    echo $snap_channel
+}
+
+
+get_revision_info(){
+    json="$1"
+    snap_channel=$2
+    snap_track='latest'
+    echo "$json" | jq '.["channel-map"][] | select( .channel.track == "'$snap_track'" and .channel.name == "'$snap_channel'")'
+}
+
+get_url(){
+    json="$1"
+    echo "$json" | jq -r '.download.url'
+}
+
+get_revision(){
+    json="$1"
+    echo "$json" | jq -r '.revision'
+}
+
+get_download_url(){
+    url="$1"
+    curl -v "$url" 2>&1 1>/dev/null  | grep -e '^< Location: ' | sed 's/^< Location: //' | sed 's/\r//'
+}
+
+snap_name="$1"
+json=`get_data $snap_name`
+channel=`get_channel "$2"`
+revision_info=`get_revision_info "$json" "$channel" "$3"`
+url=`get_url "$revision_info"`
+revision=`get_revision "$revision_info"`
+download_url=`get_download_url "$url"`
+
+download_dir="."
+file_name="${snap_name}_${revision}.snap"
+assert_file_name="${snap_name}_${revision}.assert"
+
+echo save to $file_name
+aria2c -x 16 -d "$download_dir" -o "$file_name" --auto-file-renaming=false "$download_url"
+
+snap download "--$channel" "$snap_name"
+snap ack $assert_file_name 
+snap install $file_name 
+

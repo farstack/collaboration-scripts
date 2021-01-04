@@ -11,6 +11,10 @@ snap install --classic asciinema
 sudo apt install alsa-utils
 sudo apt install vorbis-tools
 sudo apt install sox
+
+# snap_install dependencies
+snap install aria2c
+snap install jq
 ```
 
 ## Setting up your bashrc
